@@ -12,18 +12,21 @@ def draw_snake():
         pygame.draw.circle(screen, (0, 255, 0), segment, radius)
 
 
+
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 running = True
 clock = pygame.time.Clock()
-fps = 15
+fps = 10
 
 radius = 10
 snake_body = [(340, 360), (330, 360), (320, 360)]
 circle_color = (255, 0, 0)
 circle_position = generate_random_position(1280, 720, radius)
 direction = "RIGHT"
+
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -50,13 +53,19 @@ while running:
     elif direction == "DOWN":
         new_head = (snake_body[0][0], snake_body[0][1] + radius * 2)
 
-    # Add new head to snake body and remove the last segment
+
+    screen_width, screen_height = 1280, 720
+    new_head = (
+        new_head[0] % screen_width,  # Wrap x-coordinate
+        new_head[1] % screen_height  # Wrap y-coordinate
+    )
     snake_body = [new_head] + snake_body[:-1]
 
     screen.fill("black")
     pygame.draw.circle(screen, circle_color, circle_position, radius)
     draw_snake()
     pygame.display.flip()
-    clock.tick(fps)
+
+    clock.tick(fps) #speed
 
 pygame.quit()
