@@ -16,7 +16,8 @@ def draw_snake():
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 running = True
-
+clock = pygame.time.Clock()
+fps = 15
 
 radius = 10
 snake_body = [(340, 360), (330, 360), (320, 360)]
@@ -56,4 +57,6 @@ while running:
     pygame.draw.circle(screen, circle_color, circle_position, radius)
     draw_snake()
     pygame.display.flip()
+    clock.tick(fps)
+
 pygame.quit()
