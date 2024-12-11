@@ -33,6 +33,25 @@ def draw_game_over_screen():
    screen.blit(quit_button, (screen_width/2 - quit_button.get_width()/2, screen_height/2 + quit_button.get_height()/2))
    pygame.display.update()
 
+def display_score(score, highest_score):
+    score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+    highest_score_text = font.render(f"Highest Score: {highest_score}", True, (255, 255, 255))
+    screen.blit(score_text, (10, 10))
+    screen.blit(highest_score_text, (10, 40))
+
+def load_highest_score(file_name="highest_score.txt"):
+    try:
+        with open(file_name, "r") as file:
+            return int(file.read().strip())
+    except (FileNotFoundError, ValueError):
+        return 0  # Default to 0 if file doesn't exist or is empty
+
+
+def save_highest_score(highest_score, file_name="highest_score.txt"):
+    with open(file_name, "w") as file:
+        file.write(str(highest_score))
+
+
 # pygame setup
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
@@ -47,6 +66,12 @@ food_color = (255, 0, 0)
 food_position = generate_random_position(1280, 720, grid_size)
 direction = "RIGHT"
 game_state = "start_menu"
+score = 0
+font = pygame.font.Font(None, 36)
+highest_score = load_highest_score()
+
+if highest_score < 0:
+    highest_score = 0 
 
 
 while running:
@@ -66,6 +91,7 @@ while running:
        keys = pygame.key.get_pressed()
        if keys[pygame.K_r]:
            game_state = "start_menu"
+           score = 0
        if keys[pygame.K_q]:
            pygame.quit()
            quit()
@@ -103,6 +129,8 @@ while running:
         if new_head in snake_body:
             game_state = "game_over"
             game_over = False
+            if highest_score <= score:
+                highest_score = score
 
         snake_body = [new_head] + snake_body[:-1]
 
@@ -111,9 +139,16 @@ while running:
             snake_body.append(snake_body[-1])  # Add a new segment at the tail
             # Generate a new food position
             food_position = generate_random_position(1280, 720, grid_size)
+            score += 1
 
+        
         screen.fill("black")
         pygame.draw.rect(screen, food_color, pygame.Rect(food_position[0], food_position[1], grid_size, grid_size))
+        display_score(score, highest_score)
         draw_snake()
+        
         pygame.display.flip()
         clock.tick(fps)
+
+save_highest_score(highest_score)
+pygame.quit()
