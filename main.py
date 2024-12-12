@@ -25,7 +25,7 @@ def draw_start_menu():
 def draw_game_over_screen():
    screen.fill((0, 0, 0))
    font = pygame.font.SysFont('arial', 40)
-   title = font.render('Game Over', True, (255, 255, 255))
+   title = font.render(f'Game Over! Your score: {score}', True, (255, 255, 255))
    restart_button = font.render('R - Restart', True, (255, 255, 255))
    quit_button = font.render('Q - Quit', True, (255, 255, 255))
    screen.blit(title, (screen_width/2 - title.get_width()/2, screen_height/2 - title.get_height()/3))
