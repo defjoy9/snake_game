@@ -64,9 +64,13 @@ pip install pygame
 ---
 
 ## 📸 Screenshots
-
+Start Menu Screen
 ![start menu screen](screenshots/start_menu.png)
+
+Gameplay Screen
 ![gameplay screen](screenshots/gameplay.png)
+
+Game Over Screen
 ![game over screen](screenshots/gane_over_screen.png)
 
 ---
