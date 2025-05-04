@@ -71,7 +71,7 @@ Gameplay Screen
 ![gameplay screen](screenshots/gameplay.png)
 
 Game Over Screen
-![game over screen](screenshots/gane_over_screen.png)
+![game over screen](screenshots/game_over_screen.png)
 
 ---
 
